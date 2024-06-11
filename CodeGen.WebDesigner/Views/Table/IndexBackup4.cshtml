@@ -1,0 +1,246 @@
+﻿@{
+    ViewBag.Title = "Tables";
+}
+
+<h2>Tables</h2>
+
+<div id="content">
+
+    <div id="CodeGenTablesGrid">
+        <span id="SectionNotifyGridCodeGenTables"></span>
+        <div id="appendSectionNotifyGridCodeGenTables" class="k-block"></div>
+    </div>
+
+    <script>
+
+			var wnd,
+            detailsTemplate;
+
+                $(document).ready(function() {
+                    var grid = $("#CodeGenTablesGrid").kendoGrid({
+                        dataSource: {
+                            transport: {
+								create: {
+										url: "@Html.Raw(Url.Action("Create", "Table"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+
+									read: {
+										url: "@Html.Raw(Url.Action("Read", "Table"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									update: {
+										url: "@Html.Raw(Url.Action("Update", "Table"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									destroy: {
+										url: "@Html.Raw(Url.Action("Destroy", "Table"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									parameterMap: function (data, operation) {
+										return JSON.stringify(data);
+									}
+							},
+							requestEnd: function (e) {
+							    PopNotify('SectionNotifyGridCodeGenTables', e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+                                if (e.response.PopNotificationMessageType === "error") {
+                                    this.cancelChanges();
+                                }
+                            },
+							schema: {
+                                data: "Data",
+                                total: "Total",
+                                PopNotificationMessage: "PopNotificationMessage",
+                                PopNotificationMessageType: "PopNotificationMessageType",
+                                model: {
+                                    id: "Id",
+                                    fields: {
+                                        Id: { editable: false, type: "number" },
+                                        TableName: {type: "string",validation: {required: true}}
+
+                                    }
+                                }
+
+                            },
+                            pageSize: 10,
+                            serverPaging: true,
+							serverFiltering: true,
+							serverSorting: true,
+							detailInit: showDetails
+                        },
+
+                        columns: [
+							{field: "TableName", title: "Table", width: "110px"},
+							{ command: ["edit", "destroy"], title: "&nbsp;", width: "100px" },
+							{ command: { text: "Columns", click: showDetails }, title: " ", width: "180px" }
+                        ],
+
+						sortable: true,
+                        pageable: true,
+						filterable: true,
+						toolbar: ["create", "save", "cancel"],
+						editable: {
+                            mode: "popup",
+                            confirmation: false,
+                        }
+
+                    }).data("kendoGrid");
+
+						wnd = $("#details")
+                        .kendoWindow({
+                            //title: "Columns",
+                            modal: true,
+                            visible: false,
+                            resizable: false,
+                            width: 800,
+                            height: 500
+                        }).data("kendoWindow");
+
+                    detailsTemplate = kendo.template($("#template").html());
+
+                });
+
+
+                function showDetails(e) {
+
+                    e.preventDefault();
+
+                    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+                    wnd.content(detailsTemplate(dataItem));
+
+                    wnd.title(dataItem.TableName);
+
+                    wnd.center().open();
+
+                    //alert(dataItem.Id);
+
+                    $("#CodeGenColumnsGrid").kendoGrid({
+                        dataSource: {
+                            transport: {
+                                create: {
+                                    url: "@Html.Raw(Url.Action("Create", "Column"))",
+                                contentType: "application/json",
+                                type: "POST"
+                            },
+
+                            read: {
+                                url: "@Html.Raw(Url.Action("Read", "Column"))",
+                            contentType: "application/json",
+                            type: "POST"
+                        },
+                        update: {
+                            url: "@Html.Raw(Url.Action("Update", "Column"))",
+                        contentType: "application/json",
+                        type: "POST"
+                    },
+                        destroy: {
+                        url: "@Html.Raw(Url.Action("Destroy", "Column"))",
+                        contentType: "application/json",
+                        type: "POST"
+                        },
+                    parameterMap: function (data, operation) {
+                        return JSON.stringify(data);
+                    }
+                },
+                requestEnd: function (e) {
+                    PopNotify('SectionNotifyCodeGenColumns', e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+                    if (e.response.PopNotificationMessageType === "error") {
+                        this.cancelChanges();
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    PopNotificationMessage: "PopNotificationMessage",
+                    PopNotificationMessageType: "PopNotificationMessageType",
+                    model: {
+                        id: "Id",
+                        fields: {
+                            Id: { editable: false, type: "number" },
+                            TableID: { type: "number" },
+                            TableID: { editable: true, type: "number", defaultValue: dataItem.Id },
+                            ColumnName: { type: "string", validation: { required: true } },
+                            ColumnType: { type: "string" },
+
+                        }
+                    }
+
+                },
+                pageSize: 10,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true,
+                filter: { field: "TableID", operator: "eq", value: dataItem.Id }
+                },
+                columns: [
+
+                    {field: "ColumnName", title: "Column", width: "110px"},
+                    { command: ["edit", "destroy"], title: "&nbsp;", width: "100px" }
+                ],
+
+                sortable: true,
+                pageable: true,
+                filterable: true,
+                toolbar: ["create", "save", "cancel"],
+                editable: {
+                    mode: "popup",
+                    confirmation: false,
+                    }
+
+
+                });
+
+
+
+                }
+
+
+    </script>
+
+</div>
+
+<div id="details"></div>
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        @*<h2>#= TableName # #= Id #</h2>*@
+        <h4>Columns</h4>
+        <div id="CodeGenColumnsGrid">
+            <span id="SectionNotifyCodeGenColumns"></span>
+            <div id="appendSectionNotifyCodeGenColumns" class="k-block"></div>
+        </div>
+    </div>
+</script>
+
+<script>
+
+    function PopNotify(NotifyArea, PopNotificationMessage, PopNotificationMessageType) {
+
+        var notificationSection = "#" + NotifyArea;
+        var appendSection = "#append" + NotifyArea;
+
+        var staticNotification = $(notificationSection).kendoNotification({
+            appendTo: appendSection,
+            autoHideAfter: 0,
+            hideOnClick: false
+        }).data("kendoNotification");
+
+        $(appendSection).empty();
+
+        staticNotification.show(PopNotificationMessage, PopNotificationMessageType);
+
+    };
+
+</script>
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+﻿<#TemplateFileOut#>${TableName}MSSQLInsert.sql<#/TemplateFileOut#>
+<#SingleFile#>False<#/SingleFile#>
+<#ForEachTable#>
+
+INSERT INTO [dbo].[${TableName}]
+(
+<#ForEachColumn#>
+[${ColumnName}],
+<#/ForEachColumn#>
+)
+VALUES
+(
+<#ForEachColumn#>
+'YourTestValue',
+<#/ForEachColumn#>
+)
+
+GO
+        
+<#/ForEachTable#>

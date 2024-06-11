@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Tables";
+}
+
+<h2>Tables</h2>
+
+<div id="content">
+
+    <div id="grid">
+        <span id="staticNotification"></span>
+        <div id="appendto" class="k-block"></div>
+    </div>
+
+    <script>
+
+                $(document).ready(function() {
+                    var element = $("#grid").kendoGrid({
+                        dataSource: {
+                            transport: {
+								create: {
+										url: "@Html.Raw(Url.Action("Create", "Table"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+
+									read: {
+										url: "@Html.Raw(Url.Action("Read", "Table"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									update: {
+										url: "@Html.Raw(Url.Action("Update", "Table"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									destroy: {
+										url: "@Html.Raw(Url.Action("Destroy", "Table"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									parameterMap: function (data, operation) {
+										return JSON.stringify(data);
+									}
+							},
+							requestEnd: function (e) {
+                                PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+                                if (e.response.PopNotificationMessageType === "error") {
+                                    this.cancelChanges();
+                                }
+                            },
+							schema: {
+                                data: "Data",
+                                total: "Total",
+                                PopNotificationMessage: "PopNotificationMessage",
+                                PopNotificationMessageType: "PopNotificationMessageType",
+                                model: {
+                                    id: "Id",
+                                    fields: {
+                                        Id: { editable: false, type: "number" },
+                                        TableName: {type: "string",validation: {required: true}}
+
+                                    }
+                                }
+
+                            },
+                            pageSize: 10,
+                            serverPaging: true,
+							serverFiltering: true,
+                            serverSorting: true
+                        },
+                        columns: [
+
+							//{field: "Id",title: "Id",width: "110px"},
+
+							{field: "TableName", title: "Table", width: "110px"},
+
+							{ command: ["edit", "destroy"], title: "&nbsp;", width: "100px" }
+
+                        ],
+
+						sortable: true,
+                        pageable: true,
+						filterable: true,
+						toolbar: ["create", "save", "cancel"],
+						editable: {
+                            mode: "popup",
+                            confirmation: false,
+                        },
+                        detailInit: detailInit,
+                        dataBound: function() {
+                            //this.expandRow(this.tbody.find("tr.k-master-row").first());
+                        }
+
+
+                    });
+                });
+
+                function detailInit(e) {
+                    $("<div/>").appendTo(e.detailCell).kendoGrid({
+                        dataSource: {
+                            transport: {
+								create: {
+										url: "@Html.Raw(Url.Action("Create", "Column"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+
+									read: {
+										url: "@Html.Raw(Url.Action("Read", "Column"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									update: {
+										url: "@Html.Raw(Url.Action("Update", "Column"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									destroy: {
+										url: "@Html.Raw(Url.Action("Destroy", "Column"))",
+										contentType: "application/json",
+										type: "POST"
+									},
+									parameterMap: function (data, operation) {
+										return JSON.stringify(data);
+									}
+							},
+							requestEnd: function (e) {
+                                PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+                                if (e.response.PopNotificationMessageType === "error") {
+                                    this.cancelChanges();
+                                }
+                            },
+							schema: {
+                                data: "Data",
+                                total: "Total",
+                                PopNotificationMessage: "PopNotificationMessage",
+                                PopNotificationMessageType: "PopNotificationMessageType",
+                                model: {
+                                    id: "Id",
+                                    fields: {
+                                        Id: { editable: false, type: "number" },
+										//TableID: { type: "number" },
+										TableID: { editable: true, type: "number", defaultValue: e.data.Id },
+                                        ColumnName: {type: "string",validation: {required: true}},
+										ColumnType: {type: "string",validation: {required: true}}
+
+                                    }
+                                }
+
+                            },
+							filter: { field: "TableID", operator: "eq", value: e.data.Id },
+                            pageSize: 10,
+                            serverPaging: true,
+                            serverSorting: true
+                        },
+                        columns: [
+                            //{field: "Id",title: "Id",width: "110px"},
+							//{field: "TableID",title: "TableID",width: "110px"},
+                            {field: "ColumnName",title: "Column",width: "110px"},
+							{field: "ColumnType",title: "Field Type",width: "110px"},
+							{ command: ["edit", "destroy"], title: "&nbsp;", width: "100px" }
+                        ],
+						sortable: true,
+                        pageable: true,
+						toolbar: ["create", "save", "cancel"],
+						editable: {
+                            mode: "popup",
+                            confirmation: false,
+                        }
+
+                    });
+                }
+
+    </script>
+
+</div>
+
+<script>
+
+    function PopNotify(PopNotificationMessage, PopNotificationMessageType) {
+
+        var staticNotification = $("#staticNotification").kendoNotification({
+            appendTo: "#appendto",
+            autoHideAfter: 0,
+            hideOnClick: false
+        }).data("kendoNotification");
+
+        $("#appendto").empty();
+        staticNotification.show(PopNotificationMessage, PopNotificationMessageType);
+    };
+
+</script>
+
+
+
+
+
+
+

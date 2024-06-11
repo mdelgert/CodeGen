@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Tables";
+}
+
+<h2>Tables</h2>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/dataSourceTableGridUncompressed.js")"></script>
+
+<div id="CodeGenTablesGrid">
+    <span id="SectionNotifyGridCodeGenTables"></span>
+    <div id="appendSectionNotifyGridCodeGenTables" class="k-block"></div>
+</div>
+
+
+@* Todo look at: Load Templates from External Files - http://docs.telerik.com/kendo-ui/framework/templates/load-remote *@
+
+<div id="details"></div>
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h4>Columns</h4>
+        <div id="CodeGenColumns">
+            <span id="SectionNotifyCodeGenColumns"></span>
+            <div id="appendSectionNotifyCodeGenColumns" class="k-block"></div>
+        </div>
+    </div>
+</script>
+
+
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Column/ShowColumnsUncompressed.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Table/GridTableUncompressed.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/GridPopNotifyUncompressed.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/GridRowHelper.js")"></script>

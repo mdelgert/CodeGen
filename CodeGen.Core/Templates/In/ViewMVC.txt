@@ -1,0 +1,23 @@
+﻿<#TemplateFileOut#>${TableName}.cshtml<#/TemplateFileOut#>
+<#SingleFile#>False<#/SingleFile#>
+<#ForEachTable#>
+@{
+    ViewBag.Title = "${TableName}";
+}
+
+<h2>${TableName}</h2>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/dataSource${TableName}.js")"></script>
+
+<div id="${TableName}Grid">
+    <span id="SectionNotifyGrid${TableName}"></span>
+    <div id="appendSectionNotifyGrid${TableName}" class="k-block"></div>
+</div>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Table/Grid${TableName}.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/GridPopNotifyUncompressed.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/GridRowHelper.js")"></script>
+
+<#/ForEachTable#>

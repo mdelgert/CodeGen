@@ -1,0 +1,24 @@
+﻿<#TemplateFileOut#>${TableName}KendoUIGridMVC.js<#/TemplateFileOut#>
+<#SingleFile#>False<#/SingleFile#>
+<#ForEachTable#>
+$(document).ready(function () {
+    $("#${TableName}KendoUIGrid").kendoGrid({
+        dataSource: dataSource${TableName}Grid,
+        columns: [
+		    <#ForEachColumn#>
+			{ field: "${ColumnName}:", title: "${ColumnName}:", width: "100px" },
+			<#/ForEachColumn#>
+        sortable: true,
+        pageable: true,
+        filterable: true,
+        toolbar: ["create", "save", "cancel"],
+        editable: {
+            mode: "popup",
+            confirmation: true,
+        }
+
+    }).data("kendoGrid");
+
+});
+
+<#/ForEachTable#>

@@ -1,0 +1,242 @@
+﻿
+@{
+    ViewBag.Title = "IndexBackup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>IndexBackup</h2>
+
+
+@*
+
+    <h2>@ViewBag.Message</h2>
+
+    @using (Html.BeginForm("AddTable", "Table", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TableName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.TableName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Save" />
+            </div>
+        </div>
+
+    }
+
+*@
+
+
+@{
+    ViewBag.Title = "Tables";
+}
+
+<h2>Tables</h2>
+
+
+<table>
+
+    <tr>
+        <td>
+            <span id="staticNotification"></span>
+
+            <div id="appendto" class="k-block"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+    </tr>
+
+</table>
+
+<div id="grid"></div>
+
+<script>
+                $(function () {
+                    $("#grid").kendoGrid({
+                        height: 400,
+                        columns: [
+
+                            //{
+                            //    field: "Id",
+                            //    width: "50px"
+                            //},
+
+                            {
+                                field: "TableName",
+                                width: "150px"
+                            },
+
+                            { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }
+
+                        ],
+
+                        //editable: "popup",
+                        //editable: true, // enable editing
+
+                        editable: {
+                            mode: "popup", // mode can be incell/inline/popup with Q1 '12 Beta Release of Kendo UI
+                            confirmation: false,
+                            //confirmation: "Are you sure?" // the confirmation message for destroy command
+                        },
+
+                        pageable: true,
+                        sortable: true,
+                        filterable: true,
+                        toolbar: ["create", "save", "cancel"], // specify toolbar commands
+                        dataSource: {
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true,
+                            sort: {
+                                field: "Id",
+                                dir: "desc"
+                            },
+                            pageSize: 10,
+                            requestEnd: function (e) {
+
+                                if (e.type == "create") {
+
+                                    //this.read();
+                                    //Notify(e.response.NotificationMessage, e.response.NotificationMessageType);
+                                }
+
+                                if (e.type == "read") {
+
+                                    //Notify(e.response.NotificationMessage, e.response.NotificationMessageType);
+
+                                }
+
+                                if (e.type == "update") {
+
+                                    //this.read();
+
+                                }
+
+                                if (e.type == "destroy") {
+
+                                    //this.read();
+                                    //Notify(e.response.NotificationMessage, e.response.NotificationMessageType);
+
+                                }
+
+                            },
+
+                            schema: {
+
+                                data: "Data",
+
+                                total: "Total",
+
+                                PopNotificationMessage: "PopNotificationMessage", //Custom message to the grid
+
+                                PopNotificationMessageType: "PopNotificationMessageType", //Type of notification
+
+                                model: { // define the model of the data source. Required for validation and property types.
+
+                                    id: "Id",
+
+                                    fields: {
+
+                                        Id: { editable: false, type: "number" },
+
+                                        TableName: {
+                                            type: "string",
+                                            validation: {
+                                                required: true
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                            },
+
+                            batch: false,
+
+                            transport: { //use HTTP POST request as by default GET is not allowed by ASP.NET MVC
+
+                                create: {
+                                    url: "@Html.Raw(Url.Action("Create", "Table"))",
+                                    contentType: "application/json",
+                                    type: "POST"
+
+                                },
+
+                                read: {
+                                    url: "@Html.Raw(Url.Action("Read", "Table"))",
+                                    contentType: "application/json",
+                                    type: "POST"
+
+                                },
+
+                                update: {
+                                    url: "@Html.Raw(Url.Action("Update", "Table"))",
+                                    contentType: "application/json",
+                                    type: "POST"
+                                },
+
+                                destroy: {
+                                    url: "@Html.Raw(Url.Action("Destroy", "Table"))",
+                                    contentType: "application/json",
+                                    type: "POST"
+                                },
+
+                                parameterMap: function (data, operation) {
+                                    return JSON.stringify(data);
+                                }
+
+
+                            }
+
+                        }
+
+                    });
+
+                });
+
+</script>
+
+
+<script>
+
+
+    //http://docs.telerik.com/kendo-ui/api/javascript/ui/notification
+
+    function PopNotify(PopNotificationMessage, PopNotificationMessageType) {
+
+        var staticNotification = $("#staticNotification").kendoNotification({
+            appendTo: "#appendto",
+            autoHideAfter: 0,
+            //button: false,
+            hideOnClick: false
+        }).data("kendoNotification");
+
+        //http://api.jquery.com/remove/
+        $("#appendto").empty();
+        staticNotification.show(PopNotificationMessage, PopNotificationMessageType);
+
+    };
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

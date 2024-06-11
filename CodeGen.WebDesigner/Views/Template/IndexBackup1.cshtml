@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Templates";
+}
+
+<h2>Templates</h2>
+
+<br />
+
+
+<div id="example">
+
+    <button id="set" class="k-button">Set value</button>
+
+    <textarea id="editor" rows="10" cols="30" style="width:740px;height:440px"></textarea>
+    <script>
+
+        /*
+
+        $(document).ready(function () {
+            $("#editor").kendoEditor({
+                tools: [
+                    "viewHtml",
+                    {
+                        name: "insertHtml",
+                        items: [
+                            { text: "Signature", value: "<p>Regards,<br /> John Doe,<br /><a href='mailto:john.doe@example.com'>john.doe@example.com</a></p>" },
+                            { text: "Kendo online demos", value: " <a href='http://demos.telerik.com/kendo-ui'>Kendo online demos</a> " }
+                        ]
+                    }
+                ]
+            });
+        });
+        */
+
+        $(document).ready(function () {
+
+
+            var editor = $("#editor").data("kendoEditor");
+
+            var setValue = function () {
+
+                //editor.value('test');
+
+                //editor.toolbar.element.add("test", "test");
+
+                //http://docs.telerik.com/kendo-ui/api/javascript/data/observablearray
+
+                //var array = new kendo.data.ObservableArray([
+                //        { text: "Signature", value: "<p>Regards,<br /> John Doe,<br /><a href='mailto:john.doe@example.com'>john.doe@example.com</a></p>" },
+                //        { text: "Kendo online demos", value: " <a href='http://demos.telerik.com/kendo-ui'>Kendo online demos</a> " }
+                //]);
+
+
+                var array = new kendo.data.ObservableArray({ text:"", value: "" });
+
+                array.shift(); //remove the first item
+
+                //array.push({ text: "a", value: "b" }); //add item
+
+                //array.push({ text: "c", value: "e" }); // add item
+
+                $.ajax({ //Post new new OrderId to server and save.
+                    type: 'POST',
+                    url: "/Token/GetAll",
+                    contentType: "application/json",
+                    async: false,
+                    success: function (data) {
+
+
+                        var arrayLength = data.length;
+
+                        for (var i = 0; i < arrayLength; i++) {
+
+                            var obj = data[i];
+
+                            //obj.ColumnType;
+
+                            array.push({ text: obj.Token, value: obj.Token });
+
+                        }
+
+                    },
+
+                });
+
+                $(document).ready(function () {
+                    $("#editor").kendoEditor({
+                        tools: [
+                            "viewHtml",
+                            {
+                                name: "insertHtml",
+                                tooltip: "Insert a token",
+                                items: array
+                            }
+                        ]
+                    });
+                });
+
+            };
+
+            $("#set").click(setValue);
+
+        });
+
+
+
+
+
+    </script>
+</div>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/dataSourceTemplateGridUncompressed.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/GridPopNotifyUncompressed.js")"></script>
+
+<div id="CodeGenTemplatesGrid">
+    <span id="SectionNotifyGridTemplate"></span>
+    <div id="appendSectionNotifyGridTemplate" class="k-block"></div>
+</div>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Template/GridTemplateUncompressed.js")"></script>
+
+
+@*
+
+    <button onclick="TemplateMethod('ActionName')" type="button" id="kendoIconButton">Generate Code</button>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#kendoIconButton").kendoButton({ icon: "funnel" });
+
+        });
+
+        function TemplateMethod(cmd) {
+
+            //http://stackoverflow.com/questions/5320802/post-json-data-to-asmx-webservice
+
+            //alert(cmd);
+
+            $.ajax({
+                type: 'POST',
+                url: '/Template/RunCmd?cmd=' + cmd,
+                contentType: "application/json",
+                async: false,
+                success: function (msg) {
+                    alert(msg);
+                },
+                error: function (msg) {
+                    alert('failure');
+                    alert(msg);
+                }
+            });
+
+        };
+
+    </script>
+
+    <style scoped>
+        .k-button .k-image {
+            height: 16px;
+        }
+    </style>
+
+*@
+
+@*
+
+    <p>
+        <label>Name:<input class="k-textbox" name="TemplateFileName" /></label>
+    </p>
+    <p>
+        <label>Template Code:<input class="k-textbox" name="TemplateText" /></label>
+    </p>
+
+*@

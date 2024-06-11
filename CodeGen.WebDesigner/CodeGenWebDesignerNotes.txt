@@ -1,0 +1,28 @@
+﻿How to add a CSS class to a kendo grid column - http://www.roelvanlisdonk.nl/?p=3268
+
+
+KendoUI grid - drag and drop / reordering http://jsfiddle.net/rusev/nmB69/, http://www.telerik.com/forums/drag-and-drop-reordering
+
+############################################################################################################################################################
+Visual Studio 2013 can't debug javascript in cshtml - http://stackoverflow.com/questions/20807845/visual-studio-2013-cant-debug-javascript-in-cshtml
+
+So, apparently this is a "known issue" that will be fixed as soon as possible. A temporary work around that works for "some" people is making sure any Javascript is in a separate file.
+
+It is caused by having RAZR and Javascript in the same file and Visual Studio 2013 not being able to handle debugging in that instance.
+############################################################################################################################################################
+
+Load Templates from External Files - http://docs.telerik.com/kendo-ui/framework/templates/load-remote
+
+
+iisexpress /siteid:43
+http://localhost:6204/
+
+Add Telerik UI for ASP.NET MVC to the application - http://docs.telerik.com/kendo-ui/aspnet-mvc/asp-net-mvc-4
+
+Kendo.DynamicLinq 1.1.2 - http://www.nuget.org/packages/Kendo.DynamicLinq/
+
+Install-Package Kendo.DynamicLinq
+
+Kendoui dropdown json - http://jsbin.com/obufum/5/edit?html,css,js,output, http://www.telerik.com/forums/adding-dropdown-list-to-a-grid-column
+
+Kendoui dropdown inline - http://jsfiddle.net/Eh8GL/, http://stackoverflow.com/questions/18980325/show-dropdown-in-cell-of-kendo-grid-in-template, http://demos.telerik.com/kendo-ui/grid/editing-inline

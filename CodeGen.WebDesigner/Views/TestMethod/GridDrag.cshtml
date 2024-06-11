@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "GridDrag";
+}
+
+<h2>GridDrag</h2>
+
+<div id="grid"></div>
+
+
+<script>
+
+    //http://jsfiddle.net/BtkCf/4/
+
+
+    //http://www.wenda.io/questions/1423131/how-to-reorder-kendo-grid-rows.html
+    $("#grid").kendoGrid({
+        dataSource: [
+          { id: 1, foo: "foo" },
+          { id: 2, foo: "bar" },
+          { id: 3, foo: "baz" }
+        ],
+        columns: [
+          { field: "id" },
+          { field: "foo" },
+          { template: '<button onclick="return up(\'#=uid#\')">up</button><button onclick="return down(\'#=uid#\')">down</button>' }
+        ]
+    });
+
+
+    function up(uid) {
+        var grid = $("#grid").data("kendoGrid");
+        var dataItem = grid.dataSource.getByUid(uid);
+        var index = grid.dataSource.indexOf(dataItem);
+        var newIndex = Math.max(0, index - 1);
+
+        if (newIndex != index) {
+            grid.dataSource.remove(dataItem);
+            grid.dataSource.insert(newIndex, dataItem);
+        }
+
+        return false;
+    }
+
+    function down(uid) {
+        var grid = $("#grid").data("kendoGrid");
+        var dataItem = grid.dataSource.getByUid(uid);
+        var index = grid.dataSource.indexOf(dataItem);
+        var newIndex = Math.min(grid.dataSource.total() - 1, index + 1);
+
+        if (newIndex != index) {
+            grid.dataSource.remove(dataItem);
+            grid.dataSource.insert(newIndex, dataItem);
+        }
+
+        return false;
+    }
+
+
+</script>

@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "Templates";
+}
+
+<h2>Templates</h2>
+
+<div>
+
+    <br />
+    <button type="button" id="btnLoadTemplates" onclick="RunCommand('loadFiles');">Load Templates</button>
+
+    @*<button type="button" id="btnGenerateCode" onclick=" RunCommand('generateCode'); ">Run All</button>*@
+
+    <button type="button" id="btnGenerateCode" onclick=" RunCommand('RunAllTemplates'); ">Run All</button>
+
+    <br />
+
+    <div id="debug"></div>
+
+</div>
+
+
+    <br />
+
+    <script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/dataSourceTemplateGridUncompressed.js")"></script>
+
+    <script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/GridPopNotifyUncompressed.js")"></script>
+
+    <div id="CodeGenTemplatesGrid">
+        <span id="SectionNotifyGridTemplate"></span>
+        <div id="appendSectionNotifyGridTemplate" class="k-block"></div>
+    </div>
+
+    <script id="popup-editor" type="text/x-kendo-template">
+
+        <div class="k-edit-form-container">
+
+            <div class="k-edit-label">
+                <label for="TemplateFileName">File:</label>
+            </div>
+            <div class="k-edit-field" data-container-for="TemplateFileName">
+                <input name="TemplateFileName" class="k-input k-textbox">
+            </div>
+
+            <div class="k-edit-label">
+                <label for="TemplateFileExtension">Extension:</label>
+            </div>
+            <div class="k-edit-field" data-container-for="TemplateFileExtension">
+                <input name="TemplateFileExtension" class="k-input k-textbox">
+            </div>
+            <div class="k-edit-label">
+                <label for="TemplateText">Template Code:</label>
+            </div>
+            <div class="k-edit-field" data-container-for="TemplateText">
+                <textarea rows="15" cols="50" name="TemplateText" class="k-textbox">Textarea</textarea>
+            </div>
+
+
+        </div>
+
+
+        <div>
+
+        </div>
+
+        @*
+
+            <input id="tokens" style="width: 400px" />
+
+            # GetTokens(); #
+
+        *@
+
+
+    </script>
+
+
+
+
+    <script type="text/javascript" src="@Url.Content("/Scripts/Views/Template/GridTemplateUncompressed.js")"></script>
+
+
+    @*How to resize Popup Editor - http://www.telerik.com/forums/how-to-resize-popup-editor*@
+
+    <style type="text/css">
+        .k-widget.k-window {
+            width: 500px;
+            height: 600px;
+            text-align: left;
+        }
+
+        .k-edit-form-container {
+            padding: 0px;
+        }
+
+        .k-textbox {
+            width: 400px;
+        }
+
+        .k-edit-label {
+            padding: 5px;
+        }
+    </style>
+
+
+<script>
+
+    $(function () {
+        $("#btnLoadTemplates").kendoButton({
+            icon: "pencil"
+        });
+
+    });
+
+    $(function () {
+        $("#btnGenerateCode").kendoButton({
+            icon: "pencil"
+        });
+
+    });
+
+    function RunCommand(cmd) {
+
+        //alert('test');
+
+        $.ajax({
+            type: 'POST',
+            url: "/Template/RunCmd?cmd=" + cmd,
+            contentType: "application/json",
+            async: false,
+            success: function (data) {
+                document.getElementById("debug").innerHTML = data;
+
+                $('#CodeGenTemplatesGrid').data('kendoGrid').dataSource.read();
+                $('#CodeGenTemplatesGrid').data('kendoGrid').refresh();
+
+            },
+            error: function (msg) {
+                alert('failure');
+                alert(msg);
+            }
+        });
+
+    };
+
+
+
+</script>

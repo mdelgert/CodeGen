@@ -1,0 +1,3 @@
+﻿Kendo.DynamicLinq - https://github.com/kendo-labs/dlinq-helpers
+Kendo UI Open Sources Dynamic LINQ Helpers - http://blogs.telerik.com/kendoui/posts/14-01-02/kendo-ui-open-sources-dynamic-linq-helpers
+Kendo.DynamicLinq 1.1.2 - http://www.nuget.org/packages/Kendo.DynamicLinq/

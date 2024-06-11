@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Tokens";
+}
+
+<h2>Tokens</h2>
+
+<br />
+
+<div id="debuText"></div>
+
+<script id="popup-editor" type="text/x-kendo-template">
+
+    <div class="k-edit-form-container">
+
+        <div class="k-edit-label">
+            <label for="Token">Token:</label>
+        </div>
+
+        <div class="k-edit-field" data-container-for="Token">
+            <input name="Token" class="k-input k-textbox">
+            @*<input name="Token">*@
+        </div>
+
+        <div class="k-edit-label">
+            <label for="TokenNote">Note:</label>
+        </div>
+        <div class="k-edit-field" data-container-for="TokenNote">
+            <input name="TokenNote" class="k-input k-textbox">
+        </div>
+
+        @*
+        <div class="k-edit-label">
+            <label for="IsSystemToken">System Token:</label>
+        </div>
+        <div data-container-for="IsSystemToken" class="k-edit-field">
+            <input type="checkbox" name="IsSystemToken">
+        </div>
+        *@
+
+        <div class="k-edit-label">
+            <label for="TokenValue">Value:</label>
+        </div>
+        <div class="k-edit-field" data-container-for="TokenValue">
+            <textarea rows="15" cols="50" name="TokenValue" class="k-textbox"></textarea>
+        </div>
+
+    </div>
+
+</script>
+
+<div id="TokenGrid">
+    <span id="SectionNotifyGridToken"></span>
+    <div id="appendSectionNotifyGridToken" class="k-block"></div>
+</div>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Token/TokenGrid.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("/Scripts/Views/Shared/GridPopNotifyUncompressed.js")"></script>
+
+<style type="text/css">
+    .k-widget.k-window
+    {
+        width: 500px;
+        height: 600px;
+        text-align: left;
+    }
+    
+    .k-edit-form-container
+    {
+        padding: 0px;
+    }
+    
+    .k-textbox
+    {
+        width: 400px;
+    }
+    
+    .k-edit-label
+    {
+        padding: 5px;
+    }
+
+    .red{
+    
+    background-color: red;
+    }
+
+</style>
+

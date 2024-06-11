@@ -1,0 +1,289 @@
+﻿@{
+    ViewBag.Title = "Tables";
+}
+
+<h2>Tables</h2>
+
+
+<div id="grid">
+
+    <span id="staticNotification"></span>
+
+    <div id="appendto" class="k-block"></div>
+
+</div>
+
+<script type="text/x-kendo-template" id="template">
+    <div class="columns"></div>
+</script>
+
+
+
+
+<script>
+
+                $(document).ready(function () {
+
+                    var element = $("#grid").kendoGrid({
+
+
+                        columns: [
+
+                            //{
+                            //    field: "Id",
+                            //    width: "50px"
+                            //},
+
+                            {
+                                field: "TableName",
+                                width: "300px"
+                            },
+
+
+                            { command: ["edit", "destroy"], title: "&nbsp;", width: "100px" }
+
+
+                        ],
+
+
+                        //editable: "popup",
+                        //editable: true, // enable editing
+
+                        editable: {
+                            mode: "popup", // mode can be incell/inline/popup with Q1 '12 Beta Release of Kendo UI
+                            confirmation: false,
+                            //confirmation: "Are you sure?" // the confirmation message for destroy command
+                        },
+
+                        pageable: true,
+
+                        detailTemplate: kendo.template($("#template").html()),
+                        detailInit: detailInit,
+                        dataBound: function () {
+                            this.expandRow(this.tbody.find("tr.k-master-row").first());
+                        },
+
+
+                        sortable: true,
+                        filterable: true,
+                        toolbar: ["create", "save", "cancel"], // specify toolbar commands
+                        dataSource: {
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true,
+                            sort: {
+                                field: "Id",
+                                dir: "desc"
+                            },
+                            pageSize: 10,
+                            requestEnd: function (e) {
+
+                                PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+
+                                if (e.response.PopNotificationMessageType === "error") {
+                                    this.cancelChanges(); //Cancle grid save
+                                }
+
+                            },
+
+                            schema: {
+
+                                data: "Data",
+
+                                total: "Total",
+
+                                PopNotificationMessage: "PopNotificationMessage", //Custom message to the grid
+
+                                PopNotificationMessageType: "PopNotificationMessageType", //Type of notification
+
+                                model: { // define the model of the data source. Required for validation and property types.
+
+                                    id: "Id",
+
+                                    fields: {
+
+                                        Id: { editable: false, type: "number" },
+
+                                        TableName: {
+                                            type: "string",
+                                            validation: {
+                                                required: true
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                            },
+
+                            batch: false,
+
+                            transport: { //use HTTP POST request as by default GET is not allowed by ASP.NET MVC
+
+                                create: {
+                                    url: "@Html.Raw(Url.Action("Create", "Table"))",
+                                    contentType: "application/json",
+                                    type: "POST"
+
+                                },
+
+                                read: {
+                                    url: "@Html.Raw(Url.Action("Read", "Table"))",
+                                    contentType: "application/json",
+                                    type: "POST"
+
+                                },
+
+                                update: {
+                                    url: "@Html.Raw(Url.Action("Update", "Table"))",
+                                    contentType: "application/json",
+                                    type: "POST"
+                                },
+
+                                destroy: {
+                                    url: "@Html.Raw(Url.Action("Destroy", "Table"))",
+                                    contentType: "application/json",
+                                    type: "POST"
+                                },
+
+                                parameterMap: function (data, operation) {
+                                    return JSON.stringify(data);
+                                }
+
+
+                            }
+
+                        }
+
+
+                    });
+
+
+                });
+
+
+                function detailInit(e) {
+                    var detailRow = e.detailRow;
+
+                    detailRow.find(".columns").kendoGrid({
+
+                        dataSource: {
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true,
+                            sort: {
+                                field: "Id",
+                                dir: "desc"
+                            },
+                            pageSize: 10,
+                            requestEnd: function (e) {
+                                PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+                                if (e.response.PopNotificationMessageType === "error") {
+                                    this.cancelChanges(); //Cancle grid save
+                                }
+                            },
+
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                PopNotificationMessage: "PopNotificationMessage",
+                                PopNotificationMessageType: "PopNotificationMessageType", //Type of notification
+                                model: {
+                                    id: "Id",
+                                    fields: {
+                                        Id: { editable: false, type: "number" },
+                                        ColumnName: { type: "string", validation: { required: true } },
+                                        ColumnType: { type: "string", validation: { required: true } },
+                                        TableName: { type: "string", validation: { required: true } }
+
+
+                                    }
+                                }
+                            },
+
+                            batch: false,
+                            transport: { //use HTTP POST request as by default GET is not allowed by ASP.NET MVC
+
+                                create: {
+                                    url: "@Html.Raw(Url.Action("Create", "Column"))",
+                                contentType: "application/json",
+                                type: "POST"
+
+                            },
+
+                            read: {
+                                url: "@Html.Raw(Url.Action("Read", "Column"))",
+                            contentType: "application/json",
+                            type: "POST"
+
+                        },
+
+                        update: {
+                            url: "@Html.Raw(Url.Action("Update", "Column"))",
+                        contentType: "application/json",
+                        type: "POST"
+                    },
+
+                        destroy: {
+                        url: "@Html.Raw(Url.Action("Destroy", "Column"))",
+                        contentType: "application/json",
+                        type: "POST"
+                        },
+
+                    parameterMap: function (data, operation) {
+                        return JSON.stringify(data);
+                    }
+
+                }
+
+                }
+
+
+
+                });
+
+
+
+                }
+
+
+</script>
+
+
+
+<script>
+
+
+    //http://docs.telerik.com/kendo-ui/api/javascript/ui/notification
+
+    function PopNotify(PopNotificationMessage, PopNotificationMessageType) {
+
+        var staticNotification = $("#staticNotification").kendoNotification({
+            appendTo: "#appendto",
+            autoHideAfter: 0,
+            //button: false,
+            hideOnClick: false
+        }).data("kendoNotification");
+
+        //http://api.jquery.com/remove/
+        $("#appendto").empty();
+        staticNotification.show(PopNotificationMessage, PopNotificationMessageType);
+
+    };
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

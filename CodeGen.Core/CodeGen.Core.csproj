@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7BED4271-FC8D-41A3-BEA1-BAAE884051CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeGen.Core</RootNamespace>
+    <AssemblyName>CodeGen.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.0\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\CodeGenContext.cs" />
+    <Compile Include="Data\MapColumnTypeDomain.cs" />
+    <Compile Include="Data\MapFileDomain.cs" />
+    <Compile Include="Data\MapTableDomain.cs" />
+    <Compile Include="Data\Configuration.cs" />
+    <Compile Include="Data\MapColumnDomain.cs" />
+    <Compile Include="Data\MapTemplateDomain.cs" />
+    <Compile Include="Data\MapTokenDomain.cs" />
+    <Compile Include="Domain\ColumnDomain.cs" />
+    <Compile Include="Domain\ColumnTypeDomain.cs" />
+    <Compile Include="Domain\FileDomain.cs" />
+    <Compile Include="Domain\TableDomain.cs" />
+    <Compile Include="Domain\TemplateDomain.cs" />
+    <Compile Include="Domain\TokenDomain.cs" />
+    <Compile Include="Model\ColumnModel.cs" />
+    <Compile Include="Model\ColumnTypeModel.cs" />
+    <Compile Include="Model\Context.cs" />
+    <Compile Include="Model\FileModel.cs" />
+    <Compile Include="Model\TableModel.cs" />
+    <Compile Include="Model\TemplateModel.cs" />
+    <Compile Include="Model\TokenModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ColumnService.cs" />
+    <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\ICodeGenerator.cs" />
+    <Compile Include="Services\IColumnService.cs" />
+    <Compile Include="Services\IColumnTypeService.cs" />
+    <Compile Include="Services\IFileService.cs" />
+    <Compile Include="Services\ITableService.cs" />
+    <Compile Include="Services\ITemplateService.cs" />
+    <Compile Include="Services\ITestMethodService.cs" />
+    <Compile Include="Services\ITokenService.cs" />
+    <Compile Include="Services\ColumnTypeService.cs" />
+    <Compile Include="Services\TableService.cs" />
+    <Compile Include="Services\TemplateService.cs" />
+    <Compile Include="Services\TemplateServiceBackup.cs" />
+    <Compile Include="Services\TestMethodService.cs" />
+    <Compile Include="Services\TokenService.cs" />
+    <None Include="Templates\In\Context.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\Controller.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\ObjectDomain.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\IService.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\MapDomain.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\ObjectModel.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\Service.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeGenCoreLicense.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CodeGenCoreNotes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Templates\In\ViewMVC.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\KendoDataSourceMVC.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\MSSQLInsert.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\In\KendoUIGridMVC.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeGen.DynamicLinq\CodeGen.DynamicLinq.csproj">
+      <Project>{2bd75d53-e0ea-4995-8b0f-60ad709945ac}</Project>
+      <Name>CodeGen.DynamicLinq</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Templates\Out\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

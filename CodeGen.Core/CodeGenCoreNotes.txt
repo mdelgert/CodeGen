@@ -1,0 +1,25 @@
+﻿Install-Package EntityFramework -Version 6.0.0 
+
+Install-Package Kendo.DynamicLinq
+
+Kendo.DynamicLinq - https://github.com/kendo-labs/dlinq-helpers
+Kendo UI Open Sources Dynamic LINQ Helpers - http://blogs.telerik.com/kendoui/posts/14-01-02/kendo-ui-open-sources-dynamic-linq-helpers
+Kendo.DynamicLinq 1.1.2 - http://www.nuget.org/packages/Kendo.DynamicLinq/
+
+Copying a DLL's dependencies in Visual Studio - http://stackoverflow.com/questions/1043913/copying-a-dlls-dependencies-in-visual-studio
+
+  <ItemGroup>
+    <Content Include="BaseVesseaUtilityNotes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+	    <Content Include="..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  Database Schema Reader "Generate POCO classes for tables - great example" - https://dbschemareader.codeplex.com/Wikipage?ProjectName=dbschemareader
+
+  AutoMapper - https://github.com/AutoMapper/AutoMapper/wiki/Getting-started, http://automapper.org/, https://automapper.codeplex.com/

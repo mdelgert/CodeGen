@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "TestMethods";
+}
+
+<h2>TestMethods @ViewBag.Message</h2>
+
+<table>
+    <tr>
+        <td>
+            <div id="grid"></div>
+            <script>
+                $(document).ready(function () {
+                    $("#grid").kendoGrid({
+                        dataSource: {
+                            data: actions,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        ActionId: { type: "number" },
+                                        ActionName: { type: "string" },
+                                        Note: { type: "string" },
+                                        ActionUrl: { type: "string" }
+
+                                    }
+                                }
+                            },
+                            sort: { field: "ActionId", dir: "desc" },
+                            pageSize: 10
+                        },
+                        sortable: true,
+                        filterable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 10
+                        },
+                        columns: [
+
+                            { field: "ActionId", title: "Id", width: "100px" },
+                            { field: "ActionName", title: "Name", width: "200px" },
+                            { field: "Note", title: "Note", width: "200px" },
+                            { field: "ActionUrl", title: "Link", template: "<a href='${ActionUrl}'>${ActionUrl}</a>" }
+                        ]
+
+                    });
+
+                });
+
+            </script>
+            <script type="text/javascript">
+
+                var actions = [
+
+
+                    {
+                        ActionId: 1,
+                        ActionName: "TruncateTables()",
+                        Note: "Truncates tables",
+                        ActionUrl: "/TestMethod/Index?testName=TruncateTables()"
+                    },
+                    {
+                        ActionId: 2,
+                        ActionName: "DropTables()",
+                        Note: "Drops tables from DB.",
+                        ActionUrl: "/TestMethod/Index?testName=DropTables()"
+                    },
+
+                    {
+                        ActionId: 3,
+                        ActionName: "GenerateAllTestData()",
+                        Note: "Generates all tests data.",
+                        ActionUrl: "/TestMethod/Index?testName=GenerateAllTestData()"
+                    },
+
+                ]
+
+
+                /*
+
+                Notes: Data in column cell to be link to another page. KendoUI grid widget
+                http://stackoverflow.com/questions/11186601/data-in-column-cell-to-be-link-to-another-page-kendoui-grid-widget
+                http://jsfiddle.net/aNCV4/11/
+                http://jsfiddle.net/MwHNd/245/
+
+                */
+
+            </script>
+        </td>
+    </tr>
+</table>

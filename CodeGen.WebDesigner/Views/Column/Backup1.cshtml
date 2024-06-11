@@ -1,0 +1,127 @@
+﻿                        var dropDown = grid.find("#dbtable").kendoDropDownList({
+                        dataTextField: "TableName",
+                        dataValueField: "Id",
+                        autoBind: false,
+                        optionLabel: "All",
+                        dataSource: {
+                            transport: {
+                                read: {
+                                    contentType: "application/json",
+                                    url: "@Html.Raw(Url.Action("GetAll", "Table"))",
+                                    type: "POST" //use HTTP POST request as by default GET is not allowed by ASP.NET MVC
+                                    }
+                                    }
+                                    }
+
+                                    ,
+                                    change: function () {
+                                    var value = this.value();
+                                    if (value) {
+                                    grid.data("kendoGrid").dataSource.filter({ field: "TableID", operator: "eq", value: parseInt(value) });
+                                    } else {
+                                    grid.data("kendoGrid").dataSource.filter({});
+                                    }
+                                    }
+                                    });
+
+
+
+
+
+
+    function tableDropDownEditor(container, options) {
+    $('<input required data-text-field="TableName" data-value-field="Id" data-bind="value:' + options.field + '"/>')
+
+        .appendTo(container)
+        .kendoDropDownList({
+            autoBind: false,
+            dataSource: {
+                transport: {
+                    read: {
+                        contentType: "application/json",
+                        url: "@Html.Raw(Url.Action("GetAll", "Table"))",
+                    type: "POST"
+                }
+            }
+        }
+    });
+
+            }
+
+
+
+
+
+
+
+            //height: 400,
+
+
+                //{
+                //    field: "Id",
+                //    width: "50px"
+                //},
+
+//{ command: ["edit", "destroy"], title: "&nbsp;", width: "100px" }
+
+//toolbar: ["create", "save", "cancel"], // specify toolbar commands
+
+//editable: {
+// mode: "popup", // mode can be incell/inline/popup with Q1 '12 Beta Release of Kendo UI
+// confirmation: false,
+// //confirmation: "Are you sure?" // the confirmation message for destroy command
+//},
+
+//editable: {
+// mode: "inline",
+// confirmation: false,
+//},
+
+<input id="tableDomain" style="width: 400px" />
+
+<script>
+    $(document).ready(function () {
+        $("#tableDomain").kendoDropDownList({
+                                                dataTextField: "TableName",
+                                                dataValueField: "Id",
+                                                dataSource: {
+                transport: {
+                                                            read: {
+                                contentType: "application/json",
+                                url: "@Html.Raw(Url.Action("GetAll", "Table"))",
+                                type: "POST" //use HTTP POST request as by default GET is not allowed by ASP.NET MVC
+                            }
+                                                        }
+            }
+                                            });
+    });
+</script>
+
+//if (e.type == "create") {
+
+// //this.read();
+// //PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+//}
+
+//if (e.type == "read") {
+
+// //PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+
+//}
+
+//if (e.type == "update") {
+
+// //this.read();
+
+// //PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+
+//}
+
+//if (e.type == "destroy") {
+
+// //this.read();
+// //PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
+
+//}
+
+//PopNotify(e.response.PopNotificationMessage, e.response.PopNotificationMessageType);
